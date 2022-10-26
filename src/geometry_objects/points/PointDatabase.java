@@ -2,7 +2,9 @@ package geometry_objects.points;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Stream;
 
 /**
  * This class represents a bi-directional database of points.
@@ -25,12 +27,12 @@ public class PointDatabase
     
 	public PointDatabase()
 	{
-        // TODO
+        _factory = new PointNamingFactory();
 	}
 
 	public PointDatabase(List<Point> points)
 	{
-        // TODO
+        _factory = new PointNamingFactory(points);
 	}
 
 	public int size() { return _factory.size(); }
@@ -47,7 +49,7 @@ public class PointDatabase
 	 */
 	public void put(String name, double x, double y)
 	{
-        // TODO
+		_factory.put(name, x, y);
 	}
 
 	/**
@@ -58,11 +60,11 @@ public class PointDatabase
 	 */
 	public String getName(double x, double y)
 	{
-        // TODO
+        return this.getPoint(x, y).getName();
 	}
 	public String getName(Point pt)
 	{
-        // TODO
+        return this.getPoint(pt).getName();
 	}
 
 	/**
@@ -73,7 +75,10 @@ public class PointDatabase
 	 */
 	public Point getPoint(String name)
 	{
-        // TODO
+		Stream<Point> pointStream = _factory.getAllPoints().stream();
+        Optional<Point> point = pointStream.filter((Point pt) -> pt.getName().equals(name)).findFirst();
+
+		return point.orElse(null);
 	}
 
 	/**
@@ -85,7 +90,7 @@ public class PointDatabase
 	 */
 	public Point getPoint(Point pt)
 	{
-        // TODO
+        return _factory.get(pt);
 	}
 
 	/**
@@ -96,6 +101,6 @@ public class PointDatabase
 	 */
 	public Point getPoint(double x, double y)
 	{
-        // TODO
+        return _factory.get(x, y);
 	}
 }
