@@ -1,6 +1,6 @@
 package geometry_objects.points;
 
-import utilities.math.MathUtilities;
+import utilities.MathUtilities;
 
 /**
  * A 2D Point (x, y) only.
