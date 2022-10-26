@@ -2,6 +2,8 @@ package geometry_objects.points;
 
 import utilities.math.MathUtilities;
 
+import java.util.Objects;
+
 /**
  * A 2D Point (x, y) only. It also has a name, defaulting to __UNNAMED
  * 
@@ -92,5 +94,13 @@ public class Point implements Comparable<Point>
 		if (that == null) return 1;
 
 		return Point.LexicographicOrdering(this, that);
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		Point point = (Point) o;
+		return this.compareTo(point) == 0;
 	}
 }
