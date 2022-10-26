@@ -112,7 +112,7 @@ public class PointTest
 	{
 		Point pt = new Point("B", 3.5, 3.0);
 		Point pt2 = new Point("C", 3.5, 3.0);
-		assertFalse(pt.hashCode() == pt2.hashCode());
+		assertTrue(pt.hashCode() == pt2.hashCode());
 	}
 	
 	/*
