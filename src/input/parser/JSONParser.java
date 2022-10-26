@@ -5,13 +5,12 @@ import java.util.List;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.JSONTokener;
-import input.builder.GeometryBuilder;
+import input.builder.DefaultBuilder;
 import input.components.*;
 import input.components.point.PointNode;
 import input.components.point.PointNodeDatabase;
 import input.components.segment.SegmentNodeDatabase;
 import input.exception.ParseException;
-
 
 
 /**
@@ -29,13 +28,13 @@ public class JSONParser
 {
 	protected ComponentNode  _astRoot;
 	
-	private GeometryBuilder _builder;
+	private DefaultBuilder _builder;
 
 
-	public JSONParser()
+	public JSONParser(DefaultBuilder builder)
 	{
 		_astRoot = null;
-		_builder = new GeometryBuilder();
+		_builder = builder;
 		
 	}
 /*
