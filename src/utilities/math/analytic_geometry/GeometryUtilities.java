@@ -1,7 +1,7 @@
 package utilities.math.analytic_geometry;
 
 import geometry_objects.points.Point;
-import utilities.MathUtilities;
+import utilities.math.MathUtilities;
 
 public class GeometryUtilities
 {

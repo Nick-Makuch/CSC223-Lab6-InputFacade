@@ -1,7 +1,7 @@
 package geometry_objects;
 
 import geometry_objects.points.Point;
-import utilities.MathUtilities;
+import utilities.math.MathUtilities;
 import utilities.math.analytic_geometry.GeometryUtilities;
 
 public class Segment extends GeometricObject
