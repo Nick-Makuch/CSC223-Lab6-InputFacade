@@ -3,11 +3,11 @@ package geometry_objects.points;
 import utilities.math.MathUtilities;
 
 /**
- * A 2D Point (x, y) only.
+ * A 2D Point (x, y) only. It also has a name, defaulting to __UNNAMED
  * 
  * Points are ordered lexicographically (thus implementing the Comparable interface)
  * 
- * @author xxx
+ * @author Hanna King, Nick Makuch, Brycen Addison
  */
 public class Point implements Comparable<Point>
 {
@@ -43,7 +43,7 @@ public class Point implements Comparable<Point>
 	}
 
 	/**
-	 * Create a new Point with the specified coordinates.
+	 * Create a new Point with the specified coordinates and name.
 	 * @param name -- The name of the point. (Assigned by the UI)
 	 * @param x -- The X coordinate
 	 * @param y -- The Y coordinate
@@ -71,15 +71,19 @@ public class Point implements Comparable<Point>
 	}
 
 	/**
-	 * 
+	 * determine lexicographic ordering of two Points
 	 * @param p1 Point 1
 	 * @param p2 Point 2
 	 * @return Lexicographically: p1 < p2 return -1 : p1 == p2 return 0 : p1 > p2 return 1
 	 *         Order of X-coordinates first; order of Y-coordinates second
 	 */
-	public static int LexicographicOrdering(Point p1, Point p2)
+	private static int LexicographicOrdering(Point p1, Point p2)
 	{
-		// TODO
+		if (p1.getX() < p2.getX()) return -1;
+		if (p1.getX() > p2.getX()) return 1;
+		if (p1.getY() < p2.getY()) return -1;
+		if (p1.getY() > p2.getY()) return 1;
+		return 0;
 	}
 
 	@Override
