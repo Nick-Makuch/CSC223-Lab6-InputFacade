@@ -1,6 +1,7 @@
 package geometry_objects.points;
 
 import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -32,7 +33,7 @@ public class PointNamingFactory
 
 	public PointNamingFactory()
 	{
-		// TODO
+		_database = new LinkedHashMap<>();
 	}
 
 	/**
@@ -41,7 +42,10 @@ public class PointNamingFactory
 	 */
 	public PointNamingFactory(List<Point> points)
 	{
-		// TODO
+		_database = new LinkedHashMap<>();
+		
+		for(Point point : points)
+			_database.put(point, point);
 	}
 
 	/**
@@ -51,7 +55,14 @@ public class PointNamingFactory
 	 */
 	public Point put(Point pt)
 	{
-		// TODO
+		Set<Point> points = getAllPoints();
+		
+		for(Point p : points)
+			if(pt.compareTo(p) == 0)
+				return p;
+		
+		_database.put(pt, pt);
+		return pt;
 	}
 
 	/**
@@ -61,7 +72,15 @@ public class PointNamingFactory
 	 */
 	public Point put(double x, double y)
 	{
-		// TODO
+		Point newPoint = new Point(x, y);
+		Set<Point> points =getAllPoints();
+		
+		for(Point p : points)
+			if(newPoint.compareTo(p) == 0)
+				return p;
+		
+		_database.put(newPoint, newPoint);
+		return newPoint;
 	}
 
 	/**
@@ -79,7 +98,24 @@ public class PointNamingFactory
 	 */
 	public Point put(String name, double x, double y)
 	{
-		// TODO
+		Point newPoint = new Point(name, x, y);
+		Set<Point> points = getAllPoints();
+		
+		for(Point p : points) 
+		{
+			if(newPoint.compareTo(p) == 0 && p.getName() != Point.ANONYMOUS)
+				return p;
+			
+			if(newPoint.compareTo(p) == 0 && p.getName() == Point.ANONYMOUS) 
+			{
+				_database.remove(p, p);
+				_database.put(newPoint, newPoint);
+				return newPoint;
+			}
+				
+		}
+		_database.put(newPoint, newPoint);
+		return newPoint;
 	}    
 
 	/**
@@ -90,12 +126,19 @@ public class PointNamingFactory
 	 * @return stored database Object corresponding to (x, y) 
 	 */
 	public Point get(double x, double y)
-	{
-		// TODO
+	{		
+		Point newPoint = new Point(x, y);
+		Set<Point> points = getAllPoints();
+		
+		for(Point p : points) 
+			if(p.compareTo(newPoint) == 0)
+				return p;
+		
+		return null;
 	}	
 	public Point get(Point pt)
 	{
-		// TODO
+		return _database.get(pt);
 	}
 
 	/**
@@ -139,8 +182,8 @@ public class PointNamingFactory
 	 * @param y -- single coordinate
 	 * @return simple containment; no updating
 	 */
-	public boolean contains(double x, double y) { /* TODO */ }
-	public boolean contains(Point p) { /* TODO */ }
+	public boolean contains(double x, double y) { return _database.containsKey(new Point(x, y)); }
+	public boolean contains(Point p) { return _database.containsKey(p);}
 
 	/**
 	 * @return acquires and returns the next name in sequence; also
@@ -165,7 +208,7 @@ public class PointNamingFactory
 	 */
 	public  Set<Point> getAllPoints()
 	{
-        // TODO
+        return _database.keySet();
 	}
 
 	public void clear() { _database.clear(); }
@@ -174,6 +217,13 @@ public class PointNamingFactory
 	@Override
 	public String toString()
 	{
-        // TODO
+        Set<Point> points = new LinkedHashSet<Point>();
+        String str = "";
+        
+        for(Point point : points) 
+        	str += point.getName() + "(" + point.getX() + " , " + point.getY() + ")" + "\n";
+        
+        return str;
+	
 	}
 }
