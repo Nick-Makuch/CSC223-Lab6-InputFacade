@@ -11,7 +11,7 @@ public class InputFacadeTest
 	// toGeometryRepresentation
 	
 	/*
-	 * 
+	 * each json file 
 	 */
 	@Test
 	void testExtractFigure()
@@ -20,7 +20,7 @@ public class InputFacadeTest
 	}
 	
 	/*
-	 * 
+	 * each json file
 	 */
 	@Test
 	void testToGeometryRepresentation()

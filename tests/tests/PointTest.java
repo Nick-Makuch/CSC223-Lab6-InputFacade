@@ -14,7 +14,7 @@ public class PointTest
 	// constructor double double
 	// constructor string double double
 	// isUnnamed
-	// hashCode    ???? how to test ????
+	// hashCode
 	// compareTo
 	
 	/*
