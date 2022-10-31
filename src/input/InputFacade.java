@@ -1,6 +1,5 @@
 package input;
 
-
 import geometry_objects.Segment;
 import geometry_objects.points.Point;
 import geometry_objects.points.PointDatabase;
