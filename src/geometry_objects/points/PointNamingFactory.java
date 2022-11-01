@@ -144,9 +144,11 @@ public class PointNamingFactory
 		Point newPoint = new Point(name, x, y);
 		Set<Point> points = getAllPoints();
 		
-		for(Point p : points) 
+		for(Point p : points) {
 			if(newPoint.equals(p) && p.getName() != Point.ANONYMOUS)
 				return p;
+			
+		}
 		
 		return null;
 	}  
@@ -168,7 +170,12 @@ public class PointNamingFactory
 	{
 		if(!(lookupExisting(name, x, y) == null)) return lookupExisting(name, x, y);
 
-		Point newPoint = new Point(name, x, y);
+		Point newPoint = null;
+		if(name == Point.ANONYMOUS)
+			newPoint = new Point(getCurrentName(), x, y);
+		else
+			newPoint = new Point(name, x, y);
+		
 		Set<Point> points = getAllPoints();
 		
 		for(Point p : points) 
