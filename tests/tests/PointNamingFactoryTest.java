@@ -30,6 +30,10 @@ public class PointNamingFactoryTest
 		testFactory.put(pt1);
 		
 		assertEquals(testFactory.size(), 4);
+		assertTrue(testFactory.contains(pt4));
+		assertTrue(testFactory.contains(pt3));
+		assertTrue(testFactory.contains(pt2));
+		assertTrue(testFactory.contains(pt1));
 		
 	}
 	
@@ -49,6 +53,10 @@ public class PointNamingFactoryTest
 		testFactory.put(3,3);
 		
 		assertEquals(testFactory.size(), 4);
+		assertTrue(testFactory.contains(3,3));
+		assertTrue(testFactory.contains(2,2));
+		assertTrue(testFactory.contains(1,1));
+		assertTrue(testFactory.contains(0,0));
 	}
 	
 	/**
@@ -67,6 +75,10 @@ public class PointNamingFactoryTest
 		testFactory.put("D",3,3);
 		
 		assertEquals(testFactory.size(), 4);
+		assertTrue(testFactory.contains(3,3));
+		assertTrue(testFactory.contains(2,2));
+		assertTrue(testFactory.contains(1,1));
+		assertTrue(testFactory.contains(0,0));
 	}
 	
 	/**
@@ -89,6 +101,11 @@ public class PointNamingFactoryTest
 		testFactory.put(pt1);
 		
 		assertEquals(testFactory.size(), 4);
+		assertEquals(pt1, testFactory.get(pt1));
+		assertEquals(pt2, testFactory.get(pt2));
+		assertEquals(pt3, testFactory.get(pt3));
+		assertEquals(pt4, testFactory.get(pt4));
+		assertEquals(null, testFactory.get(null));
 	}
 	
 	/**
@@ -111,24 +128,11 @@ public class PointNamingFactoryTest
 		testFactory.put(pt1);
 		
 		assertEquals(testFactory.size(), 4);
-	}
-	
-	/**
-	 * 
-	 * */
-	@Test
-	void TestLookUpExisting()
-	{
-		
-	}
-	
-	/**
-	 * 
-	 * */
-	@Test
-	void TestCreateNewPoint()
-	{
-		
+		assertEquals(pt1, testFactory.get(0,0));
+		assertEquals(pt2, testFactory.get(1,0));
+		assertEquals(pt3, testFactory.get(2,0));
+		assertEquals(pt4, testFactory.get(3,0));
+		assertEquals(null, testFactory.get(null));
 	}
 	
 	/**
@@ -157,7 +161,9 @@ public class PointNamingFactoryTest
 		assertTrue(testFactory.contains(pt1));
 		
 		assertTrue(testFactory.contains(0,0));
-		assertTrue(testFactory.contains(1,1));
+		assertTrue(testFactory.contains(1,0));
+		assertTrue(testFactory.contains(2,0));
+		assertTrue(testFactory.contains(3,0));
 	}
 	
 	/**

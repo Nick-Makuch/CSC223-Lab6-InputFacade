@@ -103,4 +103,10 @@ public class Point implements Comparable<Point>
 		Point point = (Point) o;
 		return this.compareTo(point) == 0;
 	}
+	
+//	public String toString() 
+//	{
+//		return getName() + "(" + getX() + " , " + getY() + ")" + "\n";
+//	}
+	
 }
