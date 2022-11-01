@@ -1,16 +1,18 @@
 package tests;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.AbstractMap;
+import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
 
 import org.junit.jupiter.api.Test;
 
 import geometry_objects.Segment;
+import geometry_objects.points.Point;
 import geometry_objects.points.PointDatabase;
 import input.InputFacade;
 import input.builder.DefaultBuilder;
@@ -23,12 +25,6 @@ import input.visitor.UnparseVisitor;
 
 public class InputFacadeTest
 {
-
-	// extractFigure
-	// toGeometryRepresentation
-	
-	private static final JSONParser NULL_PARSER = new JSONParser(new DefaultBuilder());
-	private static final JSONParser PARSER = new JSONParser(new GeometryBuilder());
 
 	static String unparse(ComponentNode node) {
 		StringBuilder sb = new StringBuilder();
@@ -313,9 +309,356 @@ public class InputFacadeTest
 	 * each json file
 	 */
 	@Test
-	void testToGeometryRepresentation()
+	void testToGeometryRepresentation_point()
 	{
 		Map.Entry<PointDatabase, Set<Segment>> geo = InputFacade.toGeometryRepresentation("jsonfiles/point.json");
-		System.out.print(geo.toString());
+		PointDatabase points = geo.getKey();
+		Set<Segment> segments = geo.getValue();
+		
+		ArrayList<Point> expectedPoints = new ArrayList<Point>();
+		expectedPoints.add(new Point("A", 0, 0));
+		
+		LinkedHashSet<Segment> expectedSegments = new LinkedHashSet<Segment>();
+
+		assertEquals(expectedPoints.size(), points.size());
+		for (Point pt : expectedPoints)
+		{
+			assertTrue(points.getPoint(pt) != null);
+			assertTrue(expectedPoints.contains(points.getPoint(pt)));
+		}
+		assertEquals(expectedSegments, segments);
+	}
+	@Test
+	void testToGeometryRepresentation_colinear()
+	{
+		Map.Entry<PointDatabase, Set<Segment>> geo = InputFacade.toGeometryRepresentation("jsonfiles/collinear_line_segments.json");
+		PointDatabase points = geo.getKey();
+		Set<Segment> segments = geo.getValue();
+		
+		ArrayList<Point> expectedPoints = new ArrayList<Point>();
+		Point pt1 = new Point("A", 0, 0);
+		Point pt2 = new Point("B", 4, 0);
+		Point pt3 = new Point("C", 9, 0);
+		Point pt4 = new Point("D", 11, 0);
+		Point pt5 = new Point("E", 16, 0);
+		Point pt6 = new Point("F", 26, 0);
+		expectedPoints.add(pt1);
+		expectedPoints.add(pt2);
+		expectedPoints.add(pt3);
+		expectedPoints.add(pt4);
+		expectedPoints.add(pt5);
+		expectedPoints.add(pt6);
+		
+		LinkedHashSet<Segment> expectedSegments = new LinkedHashSet<Segment>();
+		expectedSegments.add(new Segment(pt1, pt2));
+		expectedSegments.add(new Segment(pt2, pt3));
+		expectedSegments.add(new Segment(pt3, pt4));
+		expectedSegments.add(new Segment(pt4, pt5));
+		expectedSegments.add(new Segment(pt5, pt6));
+
+		assertEquals(expectedPoints.size(), points.size());
+		for (Point pt : expectedPoints)
+		{
+			assertTrue(points.getPoint(pt) != null);
+			assertTrue(expectedPoints.contains(points.getPoint(pt)));
+		}
+		
+		assertEquals(expectedSegments.size(), segments.size());
+		for (Segment seg : expectedSegments)
+		{
+			assertTrue(segments.contains(seg));
+		}
+	}
+	@Test
+	void testToGeometryRepresentation_crossing_symmetric_tri()
+	{
+		Map.Entry<PointDatabase, Set<Segment>> geo = InputFacade.toGeometryRepresentation("jsonfiles/crossing_symmetric_triangle.json");
+		PointDatabase points = geo.getKey();
+		Set<Segment> segments = geo.getValue();
+		
+		ArrayList<Point> expectedPoints = new ArrayList<Point>();
+		Point pt1 = new Point("A", 3, 6);
+		Point pt2 = new Point("B", 2, 4);
+		Point pt3 = new Point("C", 4, 4);
+		Point pt4 = new Point("D", 0, 0);
+		Point pt5 = new Point("E", 6, 0);
+		expectedPoints.add(pt1);
+		expectedPoints.add(pt2);
+		expectedPoints.add(pt3);
+		expectedPoints.add(pt4);
+		expectedPoints.add(pt5);
+		
+		LinkedHashSet<Segment> expectedSegments = new LinkedHashSet<Segment>();
+		expectedSegments.add(new Segment(pt1, pt2));
+		expectedSegments.add(new Segment(pt1, pt3));
+		expectedSegments.add(new Segment(pt2, pt3));
+		expectedSegments.add(new Segment(pt2, pt4));
+		expectedSegments.add(new Segment(pt2, pt5));
+		expectedSegments.add(new Segment(pt3, pt4));
+		expectedSegments.add(new Segment(pt3, pt5));
+		expectedSegments.add(new Segment(pt4, pt5));
+
+		assertEquals(expectedPoints.size(), points.size());
+		for (Point pt : expectedPoints)
+		{
+			assertTrue(points.getPoint(pt) != null);
+			assertTrue(expectedPoints.contains(points.getPoint(pt)));
+		}
+		
+		assertEquals(expectedSegments.size(), segments.size());
+		for (Segment seg : expectedSegments)
+		{
+			assertTrue(segments.contains(seg));
+		}
+	}
+	@Test
+	void testToGeometryRepresentation_irregular_poly()
+	{
+		Map.Entry<PointDatabase, Set<Segment>> geo = InputFacade.toGeometryRepresentation("jsonfiles/fully_connected_irregular_polygon.json");
+		PointDatabase points = geo.getKey();
+		Set<Segment> segments = geo.getValue();
+		
+		ArrayList<Point> expectedPoints = new ArrayList<Point>();
+		Point pt1 = new Point("A", 0, 0);
+		Point pt2 = new Point("B", 4, 0);
+		Point pt3 = new Point("C", 6, 3);
+		Point pt4 = new Point("D", 3, 7);
+		Point pt5 = new Point("E", -2, 4);
+		Point pt6 = new Point("F", 26, 0);
+		expectedPoints.add(pt1);
+		expectedPoints.add(pt2);
+		expectedPoints.add(pt3);
+		expectedPoints.add(pt4);
+		expectedPoints.add(pt5);
+		expectedPoints.add(pt6);
+		
+		LinkedHashSet<Segment> expectedSegments = new LinkedHashSet<Segment>();
+		expectedSegments.add(new Segment(pt1, pt2));
+		expectedSegments.add(new Segment(pt1, pt3));
+		expectedSegments.add(new Segment(pt1, pt4));
+		expectedSegments.add(new Segment(pt1, pt5));
+		expectedSegments.add(new Segment(pt2, pt3));
+		expectedSegments.add(new Segment(pt2, pt4));
+		expectedSegments.add(new Segment(pt2, pt5));
+		expectedSegments.add(new Segment(pt3, pt4));
+		expectedSegments.add(new Segment(pt3, pt5));
+		expectedSegments.add(new Segment(pt4, pt5));
+
+		assertEquals(expectedPoints.size(), points.size());
+		for (Point pt : expectedPoints)
+		{
+			assertTrue(points.getPoint(pt) != null);
+			assertTrue(expectedPoints.contains(points.getPoint(pt)));
+		}
+		
+		assertEquals(expectedSegments.size(), segments.size());
+		for (Segment seg : expectedSegments)
+		{
+			assertTrue(segments.contains(seg));
+		}
+	}
+	@Test
+	void testToGeometryRepresentation_lineseg()
+	{
+		Map.Entry<PointDatabase, Set<Segment>> geo = InputFacade.toGeometryRepresentation("jsonfiles/lineseg.json");
+		PointDatabase points = geo.getKey();
+		Set<Segment> segments = geo.getValue();
+		
+		ArrayList<Point> expectedPoints = new ArrayList<Point>();
+		Point pt1 = new Point("A", 0, 0);
+		Point pt2 = new Point("B", 0, 1);
+		expectedPoints.add(pt1);
+		expectedPoints.add(pt2);
+		
+		LinkedHashSet<Segment> expectedSegments = new LinkedHashSet<Segment>();
+		expectedSegments.add(new Segment(pt1, pt2));
+
+		assertEquals(expectedPoints.size(), points.size());
+		for (Point pt : expectedPoints)
+		{
+			assertTrue(points.getPoint(pt) != null);
+			assertTrue(expectedPoints.contains(points.getPoint(pt)));
+		}
+		
+		assertEquals(expectedSegments.size(), segments.size());
+		for (Segment seg : expectedSegments)
+		{
+			assertTrue(segments.contains(seg));
+		}
+	}
+	@Test
+	void testToGeometryRepresentation_single_triangle()
+	{
+		Map.Entry<PointDatabase, Set<Segment>> geo = InputFacade.toGeometryRepresentation("jsonfiles/single_triangle.json");
+		PointDatabase points = geo.getKey();
+		Set<Segment> segments = geo.getValue();
+		
+		ArrayList<Point> expectedPoints = new ArrayList<Point>();
+		Point pt1 = new Point("A", 0, 0);
+		Point pt2 = new Point("B", 1, 1);
+		Point pt3 = new Point("C", 1, 0);
+		expectedPoints.add(pt1);
+		expectedPoints.add(pt2);
+		expectedPoints.add(pt3);
+
+		
+		LinkedHashSet<Segment> expectedSegments = new LinkedHashSet<Segment>();
+		expectedSegments.add(new Segment(pt1, pt2));
+		expectedSegments.add(new Segment(pt1, pt3));
+		expectedSegments.add(new Segment(pt2, pt3));
+
+		assertEquals(expectedPoints.size(), points.size());
+		for (Point pt : expectedPoints)
+		{
+			assertTrue(points.getPoint(pt) != null);
+			assertTrue(expectedPoints.contains(points.getPoint(pt)));
+		}
+		
+		assertEquals(expectedSegments.size(), segments.size());
+		for (Segment seg : expectedSegments)
+		{
+			assertTrue(segments.contains(seg));
+		}
+	}
+	@Test
+	void testToGeometryRepresentation_snake()
+	{
+		Map.Entry<PointDatabase, Set<Segment>> geo = InputFacade.toGeometryRepresentation("jsonfiles/snake.json");
+		PointDatabase points = geo.getKey();
+		Set<Segment> segments = geo.getValue();
+		
+		ArrayList<Point> expectedPoints = new ArrayList<Point>();
+		Point pt1 = new Point("A", 0, 0);
+		Point pt2 = new Point("B", 0, 1);
+		Point pt3 = new Point("C", 1, 0);
+		Point pt4 = new Point("D", 2, 0);
+		Point pt5 = new Point("E", 2, 1);
+		Point pt6 = new Point("F", 3, 1);
+		Point pt7 = new Point("G", 3, 0);
+		expectedPoints.add(pt1);
+		expectedPoints.add(pt2);
+		expectedPoints.add(pt3);
+		expectedPoints.add(pt4);
+		expectedPoints.add(pt5);
+		expectedPoints.add(pt6);
+		expectedPoints.add(pt7);
+		
+		LinkedHashSet<Segment> expectedSegments = new LinkedHashSet<Segment>();
+		expectedSegments.add(new Segment(pt1, pt2));
+		expectedSegments.add(new Segment(pt1, pt3));
+		expectedSegments.add(new Segment(pt2, pt3));
+		expectedSegments.add(new Segment(pt3, pt4));
+		expectedSegments.add(new Segment(pt3, pt5));
+		expectedSegments.add(new Segment(pt4, pt5));
+		expectedSegments.add(new Segment(pt5, pt6));
+		expectedSegments.add(new Segment(pt5, pt7));
+		expectedSegments.add(new Segment(pt6, pt7));
+
+		assertEquals(expectedPoints.size(), points.size());
+		for (Point pt : expectedPoints)
+		{
+			assertTrue(points.getPoint(pt) != null);
+			assertTrue(expectedPoints.contains(points.getPoint(pt)));
+		}
+		
+		assertEquals(expectedSegments.size(), segments.size());
+		for (Segment seg : expectedSegments)
+		{
+			assertTrue(segments.contains(seg));
+		}
+	}
+	@Test
+	void testToGeometryRepresentation_square_tri()
+	{
+		Map.Entry<PointDatabase, Set<Segment>> geo = InputFacade.toGeometryRepresentation("jsonfiles/square_tri.json");
+		PointDatabase points = geo.getKey();
+		Set<Segment> segments = geo.getValue();
+		
+		ArrayList<Point> expectedPoints = new ArrayList<Point>();
+		Point pt1 = new Point("A", 0, 0);
+		Point pt2 = new Point("B", 0, 2);
+		Point pt3 = new Point("C", 2, 0);
+		Point pt4 = new Point("D", 2, 2);
+		Point pt5 = new Point("E", 1, 3);
+		expectedPoints.add(pt1);
+		expectedPoints.add(pt2);
+		expectedPoints.add(pt3);
+		expectedPoints.add(pt4);
+		expectedPoints.add(pt5);
+		
+		LinkedHashSet<Segment> expectedSegments = new LinkedHashSet<Segment>();
+		expectedSegments.add(new Segment(pt1, pt2));
+		expectedSegments.add(new Segment(pt1, pt3));
+		expectedSegments.add(new Segment(pt2, pt4));
+		expectedSegments.add(new Segment(pt2, pt5));
+		expectedSegments.add(new Segment(pt3, pt4));
+		expectedSegments.add(new Segment(pt4, pt5));
+
+		assertEquals(expectedPoints.size(), points.size());
+		for (Point pt : expectedPoints)
+		{
+			assertTrue(points.getPoint(pt) != null);
+			assertTrue(expectedPoints.contains(points.getPoint(pt)));
+		}
+		
+		assertEquals(expectedSegments.size(), segments.size());
+		for (Segment seg : expectedSegments)
+		{
+			assertTrue(segments.contains(seg));
+		}
+	}
+	@Test
+	void testToGeometryRepresentation_tri_quad()
+	{
+		Map.Entry<PointDatabase, Set<Segment>> geo = InputFacade.toGeometryRepresentation("jsonfiles/Tri_Quad.json");
+		PointDatabase points = geo.getKey();
+		Set<Segment> segments = geo.getValue();
+		
+		ArrayList<Point> expectedPoints = new ArrayList<Point>();
+		Point pt1 = new Point("A", 4, 0);
+		Point pt2 = new Point("B", 8, 0);
+		Point pt3 = new Point("C", 4, 5);
+		Point pt4 = new Point("D", 8, 5);
+		Point pt5 = new Point("E", 0, 10);
+		Point pt6 = new Point("F", 12, 10);
+		Point pt7 = new Point("G", 4, 12);
+		Point pt8 = new Point("H", 8, 12);
+		Point pt9 = new Point("I", 6, 10);
+		expectedPoints.add(pt1);
+		expectedPoints.add(pt2);
+		expectedPoints.add(pt3);
+		expectedPoints.add(pt4);
+		expectedPoints.add(pt5);
+		expectedPoints.add(pt6);
+		expectedPoints.add(pt7);
+		expectedPoints.add(pt8);
+		expectedPoints.add(pt9);
+		
+		LinkedHashSet<Segment> expectedSegments = new LinkedHashSet<Segment>();
+		expectedSegments.add(new Segment(pt1, pt2));
+		expectedSegments.add(new Segment(pt1, pt3));
+		expectedSegments.add(new Segment(pt2, pt4));
+		expectedSegments.add(new Segment(pt3, pt4));
+		expectedSegments.add(new Segment(pt3, pt5));
+		expectedSegments.add(new Segment(pt3, pt9));
+		expectedSegments.add(new Segment(pt4, pt6));
+		expectedSegments.add(new Segment(pt4, pt9));
+		expectedSegments.add(new Segment(pt5, pt7));
+		expectedSegments.add(new Segment(pt6, pt8));
+		expectedSegments.add(new Segment(pt7, pt9));
+		expectedSegments.add(new Segment(pt8, pt9));
+
+		assertEquals(expectedPoints.size(), points.size());
+		for (Point pt : expectedPoints)
+		{
+			assertTrue(points.getPoint(pt) != null);
+			assertTrue(expectedPoints.contains(points.getPoint(pt)));
+		}
+		
+		assertEquals(expectedSegments.size(), segments.size());
+		for (Segment seg : expectedSegments)
+		{
+			assertTrue(segments.contains(seg));
+		}
 	}
 }
