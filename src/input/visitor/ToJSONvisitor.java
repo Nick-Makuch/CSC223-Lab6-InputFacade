@@ -31,7 +31,7 @@ public class ToJSONvisitor implements ComponentNodeVisitor
         //node.getPointsDatabase().accept(this, o);
         sb.append(StringUtilities.indent(level + 2) + "Points:" + "\n");
 		//add this to the string builder
-		for(PointNode point : node.getPointsDatabase().get_points())		
+		for(PointNode point : node.getPointsDatabase().getPoints())		
 			sb.append(StringUtilities.indent(level+3) + "Point"+ point.toString() + "\n");
 		
         //node.getSegments().accept(this, o);
@@ -112,7 +112,7 @@ public class ToJSONvisitor implements ComponentNodeVisitor
 		//node.unparse(sb, 0);
 		sb.append(StringUtilities.indent(level) + "\n" + "{" + "\n");
 		//add this to the string builder
-		for(PointNode point : node.get_points())		
+		for(PointNode point : node.getPoints())		
 			sb.append(StringUtilities.indent(level+1) + "Point"+ point.toString() + "\n");
 		return jsonPointNodeDatabase.put("Points ", sb.toString());
 
