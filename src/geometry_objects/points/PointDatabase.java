@@ -32,7 +32,8 @@ public class PointDatabase
 
 	public PointDatabase(List<Point> points)
 	{
-        _factory = new PointNamingFactory(points);
+		if (points == null) _factory = new PointNamingFactory();
+		else _factory = new PointNamingFactory(points);
 	}
 
 	public int size() { return _factory.size(); }
@@ -60,10 +61,12 @@ public class PointDatabase
 	 */
 	public String getName(double x, double y)
 	{
+		if (this.getPoint(x, y) == null) return null;
         return this.getPoint(x, y).getName();
 	}
 	public String getName(Point pt)
 	{
+		if (this.getPoint(pt) == null) return null;
         return this.getPoint(pt).getName();
 	}
 
