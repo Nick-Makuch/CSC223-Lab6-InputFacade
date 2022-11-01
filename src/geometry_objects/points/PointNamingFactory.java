@@ -156,7 +156,7 @@ public class PointNamingFactory
 	 */
 	private Point lookupExisting(String name, double x, double y)
 	{
-		// TODO
+		return put(name, x, y);
 	}  
 
 	/**
@@ -174,7 +174,7 @@ public class PointNamingFactory
 	 */
 	private Point createNewPoint(String name, double x, double y)
 	{
-		// TODO
+		return put(name, x, y);
 	}
 
 	/**
@@ -191,7 +191,7 @@ public class PointNamingFactory
 	 */
 	private String getCurrentName()
 	{
-        // TODO
+        return _currentName;
 	}
 
 	/**
@@ -200,7 +200,13 @@ public class PointNamingFactory
 	 */
 	private  void updateName()
 	{
-        // TODO
+		if(_currentName.charAt(0) == END_LETTER)
+			_currentName = "" + START_LETTER;
+		
+		_currentName = "" + _currentName.charAt(0)+1;
+		
+        for(int i = 1; i < _numLetters; i++)
+        	_currentName += _currentName.charAt(0);
 	}
 
 	/**
