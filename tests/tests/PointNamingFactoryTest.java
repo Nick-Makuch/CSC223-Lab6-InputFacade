@@ -189,10 +189,7 @@ public class PointNamingFactoryTest
 		
 		assertEquals(testFactory.size(), 4);
 		
-		System.out.println(testFactory.toString());
-//		assertEquals(testFactory.toString(), "D(3.0 , 0.0)\r\n"
-//				+ "C(2.0 , 0.0)\r\n"
-//				+ "B(1.0 , 0.0)\r\n"
-//				+ "A(0.0 , 0.0)" );
+		//System.out.println(testFactory.toString());
+		assertEquals("D(3.0 , 0.0)\nC(2.0 , 0.0)\nB(1.0 , 0.0)\nA(0.0 , 0.0)", testFactory.toString());
 	}
 }
