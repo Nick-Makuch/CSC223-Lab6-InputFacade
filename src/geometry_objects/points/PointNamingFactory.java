@@ -73,7 +73,7 @@ public class PointNamingFactory
 	public Point put(double x, double y)
 	{
 		Point newPoint = new Point(x, y);
-		Set<Point> points =getAllPoints();
+		Set<Point> points = getAllPoints();
 		
 		for(Point p : points)
 			if(newPoint.compareTo(p) == 0)
@@ -99,25 +99,7 @@ public class PointNamingFactory
 	public Point put(String name, double x, double y)
 	{
 		return createNewPoint(name, x, y);
-		
-//		Point newPoint = new Point(name, x, y);
-//		Set<Point> points = getAllPoints();
-//		
-//		for(Point p : points) 
-//		{
-//			if(newPoint.equals(p) && p.getName() != Point.ANONYMOUS)
-//				return p;
-//			
-//			if(newPoint.equals(p) && p.getName() == Point.ANONYMOUS) 
-//			{
-//				_database.remove(p, p);
-//				_database.put(newPoint, newPoint);
-//				return newPoint;
-//			}
-//				
-//		}
-//		_database.put(newPoint, newPoint);
-//		return newPoint;
+
 	}    
 
 	/**
@@ -253,15 +235,16 @@ public class PointNamingFactory
 	@Override
 	public String toString()
 	{
-        Set<Point> points = new LinkedHashSet<Point>();
-        StringBuilder sb = new StringBuilder();
+        Set<Point> points = getAllPoints();
+        //StringBuilder sb = new StringBuilder();
         String str = "";
         
-        for(Point point : points) 
+        for(Point point : points) {
         	//sb.append(point.getName() + "(" + point.getX() + " , " + point.getY() + ")" + "\n");
         	str += "" + point.getName() + "(" + point.getX() + " , " + point.getY() + ")" + "\n";
+        }
         
-        return sb.toString();
+        return str;
 	
 	}
 }

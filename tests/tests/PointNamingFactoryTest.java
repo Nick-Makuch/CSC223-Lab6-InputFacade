@@ -21,6 +21,7 @@ public class PointNamingFactoryTest
 		Point pt2 = new Point("B", 1, 0);
 		Point pt3 = new Point("C", 2, 0);
 		Point pt4 = new Point("D", 3, 0);
+		Point pt5 = new Point("B", 1, 0);
 		
 		assertEquals(testFactory.size(), 0);
 		
@@ -34,6 +35,7 @@ public class PointNamingFactoryTest
 		assertTrue(testFactory.contains(pt3));
 		assertTrue(testFactory.contains(pt2));
 		assertTrue(testFactory.contains(pt1));
+		assertEquals(pt2, testFactory.put(pt5));
 		
 	}
 	
@@ -164,24 +166,6 @@ public class PointNamingFactoryTest
 		assertTrue(testFactory.contains(1,0));
 		assertTrue(testFactory.contains(2,0));
 		assertTrue(testFactory.contains(3,0));
-	}
-	
-	/**
-	 * 
-	 * */
-	@Test
-	void TestGetCurrName()
-	{
-		
-	}
-	
-	/**
-	 * 
-	 * */
-	@Test
-	void TestUpdateName()
-	{
-		
 	}
 	
 	/**
