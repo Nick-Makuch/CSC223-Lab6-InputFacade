@@ -214,8 +214,8 @@ public class PointNamingFactory
 			_currentName = "" + START_LETTER;
 			_numLetters++;
 		}	
-		
-		_currentName = "" + _currentName.charAt(0)+1;
+		else
+			_currentName = "" + _currentName.charAt(0)+1;
 		
         for(int i = 1; i < _numLetters; i++)
         	_currentName += _currentName.charAt(0);
