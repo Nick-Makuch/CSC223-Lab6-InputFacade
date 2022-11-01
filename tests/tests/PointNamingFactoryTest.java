@@ -192,4 +192,47 @@ public class PointNamingFactoryTest
 		//System.out.println(testFactory.toString());
 		assertEquals("D(3.0 , 0.0)\nC(2.0 , 0.0)\nB(1.0 , 0.0)\nA(0.0 , 0.0)\n", testFactory.toString());
 	}
+	
+	/**
+	 * 
+	 * */
+	@Test
+	void TestGetCurrName() 
+	{
+		PointNamingFactory testFactory = new PointNamingFactory();
+		assertEquals("*_A", testFactory.getCurrentNameTester());
+		assertEquals("*_B", testFactory.getCurrentNameTester());
+		assertEquals("*_C", testFactory.getCurrentNameTester());
+		assertEquals("*_D", testFactory.getCurrentNameTester());
+		assertEquals("*_E", testFactory.getCurrentNameTester());
+		assertEquals("*_F", testFactory.getCurrentNameTester());
+		assertEquals("*_G", testFactory.getCurrentNameTester());
+		assertEquals("*_H", testFactory.getCurrentNameTester());
+		assertEquals("*_I", testFactory.getCurrentNameTester());
+		assertEquals("*_J", testFactory.getCurrentNameTester());
+		assertEquals("*_K", testFactory.getCurrentNameTester());
+		assertEquals("*_L", testFactory.getCurrentNameTester());
+		assertEquals("*_M", testFactory.getCurrentNameTester());
+		assertEquals("*_N", testFactory.getCurrentNameTester());
+		assertEquals("*_O", testFactory.getCurrentNameTester());
+		assertEquals("*_P", testFactory.getCurrentNameTester());
+		assertEquals("*_Q", testFactory.getCurrentNameTester());
+		assertEquals("*_R", testFactory.getCurrentNameTester());
+		assertEquals("*_S", testFactory.getCurrentNameTester());
+		assertEquals("*_T", testFactory.getCurrentNameTester());
+		assertEquals("*_U", testFactory.getCurrentNameTester());
+		assertEquals("*_V", testFactory.getCurrentNameTester());
+		assertEquals("*_W", testFactory.getCurrentNameTester());
+		assertEquals("*_X", testFactory.getCurrentNameTester());
+		assertEquals("*_Y", testFactory.getCurrentNameTester());
+		assertEquals("*_Z", testFactory.getCurrentNameTester());
+		
+		assertEquals("*_AA", testFactory.getCurrentNameTester());
+		assertEquals("*_BB", testFactory.getCurrentNameTester());
+		assertEquals("*_CC", testFactory.getCurrentNameTester());
+		assertEquals("*_DD", testFactory.getCurrentNameTester());
+		
+	}
+	
+	
 }

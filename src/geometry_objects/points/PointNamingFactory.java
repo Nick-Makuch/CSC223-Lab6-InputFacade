@@ -72,11 +72,12 @@ public class PointNamingFactory
 	 */
 	public Point put(double x, double y)
 	{
-		Point newPoint = new Point(x, y);
+		Point newPoint = new Point(getCurrentName(), x, y);
 		Set<Point> points = getAllPoints();
 		
 		for(Point p : points)
-			if(newPoint.compareTo(p) == 0)
+			//if(newPoint.compareTo(p) == 0)
+			if(newPoint.equals(p))
 				return p;
 		
 		_database.put(newPoint, newPoint);
@@ -165,26 +166,23 @@ public class PointNamingFactory
 	 */
 	private Point createNewPoint(String name, double x, double y)
 	{
-		if(lookupExisting(name, x, y) == null) 
-		{
-			Point newPoint = new Point(name, x, y);
-			Set<Point> points = getAllPoints();
+		if(!(lookupExisting(name, x, y) == null)) return lookupExisting(name, x, y);
+
+		Point newPoint = new Point(name, x, y);
+		Set<Point> points = getAllPoints();
 		
-			for(Point p : points) 
-			{			
-				if(newPoint.equals(p) && p.getName() == Point.ANONYMOUS) 
-				{
-					_database.remove(p, p);
-					_database.put(newPoint, newPoint);
-					return newPoint;
-				}
-				
+		for(Point p : points) 
+		{			
+			if(newPoint.equals(p) && p.getName() == Point.ANONYMOUS) 
+			{
+				_database.remove(p, p);
+				_database.put(newPoint, newPoint);
+				return newPoint;
 			}
-			_database.put(newPoint, newPoint);
-			return newPoint;
+				
 		}
-		
-		return lookupExisting(name, x, y);
+		_database.put(newPoint, newPoint);
+		return newPoint;
 	}
 
 	/**
@@ -201,7 +199,19 @@ public class PointNamingFactory
 	 */
 	private String getCurrentName()
 	{
-        return _currentName;
+        String string = _PREFIX + _currentName;
+        updateName();
+        return string;
+	}
+	
+	/**
+	 * used for testing
+	 * */
+	public String getCurrentNameTester()
+	{
+        String string = _PREFIX + _currentName;
+        updateName();
+        return string;
 	}
 
 	/**
@@ -214,8 +224,10 @@ public class PointNamingFactory
 			_currentName = "" + START_LETTER;
 			_numLetters++;
 		}	
-		else
-			_currentName = "" + _currentName.charAt(0)+1;
+		else {
+			char next = (char) (_currentName.charAt(0)+1);
+			_currentName = "" + next;
+		}
 		
         for(int i = 1; i < _numLetters; i++)
         	_currentName += _currentName.charAt(0);
@@ -236,11 +248,9 @@ public class PointNamingFactory
 	public String toString()
 	{
         Set<Point> points = getAllPoints();
-        //StringBuilder sb = new StringBuilder();
         String str = "";
         
         for(Point point : points) {
-        	//sb.append(point.getName() + "(" + point.getX() + " , " + point.getY() + ")" + "\n");
         	str += "" + point.getName() + "(" + point.getX() + " , " + point.getY() + ")" + "\n";
         }
         
