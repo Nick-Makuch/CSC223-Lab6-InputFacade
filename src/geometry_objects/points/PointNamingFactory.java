@@ -165,26 +165,25 @@ public class PointNamingFactory
 	 */
 	private Point createNewPoint(String name, double x, double y)
 	{
-		if(lookupExisting(name, x, y) == null) 
-		{
-			Point newPoint = new Point(name, x, y);
-			Set<Point> points = getAllPoints();
-		
-			for(Point p : points) 
-			{			
-				if(newPoint.equals(p) && p.getName() == Point.ANONYMOUS) 
-				{
-					_database.remove(p, p);
-					_database.put(newPoint, newPoint);
-					return newPoint;
-				}
-				
-			}
-			_database.put(newPoint, newPoint);
-			return newPoint;
+		if (lookupExisting(name, x, y) != null) {
+			return lookupExisting(name, x, y);
 		}
-		
-		return lookupExisting(name, x, y);
+
+		Point newPoint = new Point(name, x, y);
+		Set<Point> points = getAllPoints();
+
+		for(Point p : points)
+		{
+			if(newPoint.equals(p) && p.getName() == Point.ANONYMOUS)
+			{
+				_database.remove(p, p);
+				_database.put(newPoint, newPoint);
+				return newPoint;
+			}
+
+		}
+		_database.put(newPoint, newPoint);
+		return newPoint;
 	}
 
 	/**
